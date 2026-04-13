@@ -1,0 +1,492 @@
+[
+  {
+    "source": "App.vue",
+    "target": "src/legacy/App.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/LandingSpin/Congrats.vue",
+    "target": "src/components/LandingSpin/Congrats.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/LandingSpin/LandingModal.vue",
+    "target": "src/components/LandingSpin/LandingModal.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/LandingSpin/LastWinner.vue",
+    "target": "src/components/LandingSpin/LastWinner.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/LandingSpin/LastWinners.vue",
+    "target": "src/components/LandingSpin/LastWinners.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/LandingSpin/Spinner.vue",
+    "target": "src/components/LandingSpin/Spinner.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/Missions/MissionModal.vue",
+    "target": "src/components/Missions/MissionModal.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/Nav/BottomNavComponent.vue",
+    "target": "src/components/Nav/BottomNavComponent.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/Nav/NavTopComponent.vue",
+    "target": "src/components/Nav/NavTopComponent.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/Nav/SideBarComponent.vue",
+    "target": "src/components/Nav/SideBarComponent.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/BettingBulletinComponent.vue",
+    "target": "src/components/UI/BettingBulletinComponent.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/CookiesComponent.vue",
+    "target": "src/components/UI/CookiesComponent.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/CounterComponent.vue",
+    "target": "src/components/UI/CounterComponent.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/CustomPagination.vue",
+    "target": "src/components/UI/CustomPagination.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/DropdownDarkLight.vue",
+    "target": "src/components/UI/DropdownDarkLight.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/FooterComponent.vue",
+    "target": "src/components/UI/FooterComponent.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/HeaderComponent.vue",
+    "target": "src/components/UI/HeaderComponent.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/LanguageSelector.vue",
+    "target": "src/components/UI/LanguageSelector.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/LoadingComponent.vue",
+    "target": "src/components/UI/LoadingComponent.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/MakeDeposit.vue",
+    "target": "src/components/UI/MakeDeposit.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/UI/WalletBalance.vue",
+    "target": "src/components/UI/WalletBalance.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/Widgets/DepositWidget.vue",
+    "target": "src/components/Widgets/DepositWidget.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Components/Widgets/FootballGameWidget.vue",
+    "target": "src/components/Widgets/FootballGameWidget.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Layouts/AuthLayout.vue",
+    "target": "src/components/layouts/AuthLayout.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Layouts/BaseLayout.vue",
+    "target": "src/components/layouts/BaseLayout.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Layouts/GameLayout.vue",
+    "target": "src/components/layouts/GameLayout.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Layouts/LandingLayout.vue",
+    "target": "src/components/layouts/LandingLayout.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Mixins/helperMixin.js",
+    "target": "src/utils/helperMixin.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/ApiData/DataPage.vue",
+    "target": "src/pages/ApiData/DataPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Auth/ForgotPassword.vue",
+    "target": "src/pages/Auth/ForgotPassword.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Auth/LoginPage.vue",
+    "target": "src/pages/Auth/LoginPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Auth/RegisterPage.vue",
+    "target": "src/pages/Auth/RegisterPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Auth/ResetPassword.vue",
+    "target": "src/pages/Auth/ResetPassword.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Cassino/CasinoPlayPage.vue",
+    "target": "src/pages/Cassino/CasinoPlayPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Cassino/CassinoListPage.vue",
+    "target": "src/pages/Cassino/CassinoListPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Cassino/CassinoSearch.vue",
+    "target": "src/pages/Cassino/CassinoSearch.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Cassino/Components/CassinoGameCard.vue",
+    "target": "src/pages/Cassino/Components/CassinoGameCard.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Gateway/StripeCancel.vue",
+    "target": "src/pages/Gateway/StripeCancel.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Gateway/StripeSuccess.vue",
+    "target": "src/pages/Gateway/StripeSuccess.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Home/AwardsPage.vue",
+    "target": "src/pages/Home/AwardsPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Home/BonusPage.vue",
+    "target": "src/pages/Home/BonusPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Home/Components/MissionCard.vue",
+    "target": "src/pages/Home/Components/MissionCard.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Home/Components/MissionDaily.vue",
+    "target": "src/pages/Home/Components/MissionDaily.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Home/Components/MissionWeekly.vue",
+    "target": "src/pages/Home/Components/MissionWeekly.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Home/Components/ShowCarousel.vue",
+    "target": "src/pages/Home/Components/ShowCarousel.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Home/Components/ShowProviders.vue",
+    "target": "src/pages/Home/Components/ShowProviders.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Home/EventsPage.vue",
+    "target": "src/pages/Home/EventsPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Home/HomePage.vue",
+    "target": "src/pages/Home/HomePage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Home/PromotionPage.vue",
+    "target": "src/pages/Home/PromotionPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Home/SupportCenterPage.vue",
+    "target": "src/pages/Home/SupportCenterPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Home/SupportPage.vue",
+    "target": "src/pages/Home/SupportPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Home/Vip/TableVip.vue",
+    "target": "src/pages/Home/Vip/TableVip.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Home/VipPage.vue",
+    "target": "src/pages/Home/VipPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Landing/LandingPage.vue",
+    "target": "src/pages/Landing/LandingPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Profile/AffiliatePage.vue",
+    "target": "src/pages/Profile/AffiliatePage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Profile/Components/WalletSideMenu.vue",
+    "target": "src/pages/Profile/Components/WalletSideMenu.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Profile/DepositPage.vue",
+    "target": "src/pages/Profile/DepositPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Profile/FavoritePage.vue",
+    "target": "src/pages/Profile/FavoritePage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Profile/ProfilePage.vue",
+    "target": "src/pages/Profile/ProfilePage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Profile/RecentsPage.vue",
+    "target": "src/pages/Profile/RecentsPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Profile/RecordPage.vue",
+    "target": "src/pages/Profile/RecordPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Profile/TransactionPage.vue",
+    "target": "src/pages/Profile/TransactionPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Profile/WalletPage.vue",
+    "target": "src/pages/Profile/WalletPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Profile/WithdrawPage.vue",
+    "target": "src/pages/Profile/WithdrawPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Sport/Components/HeaderNav.vue",
+    "target": "src/pages/Sport/Components/HeaderNav.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/Components/HeaderOptions.vue",
+    "target": "src/pages/Sport/Components/HeaderOptions.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/Components/SportCard.vue",
+    "target": "src/pages/Sport/Components/SportCard.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/Components/SportCardList.vue",
+    "target": "src/pages/Sport/Components/SportCardList.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/Components/SportCardLive.vue",
+    "target": "src/pages/Sport/Components/SportCardLive.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportBetsPage.vue",
+    "target": "src/pages/Sport/SportBetsPage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportBettingFeedPage.vue",
+    "target": "src/pages/Sport/SportBettingFeedPage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportCalendarPage.vue",
+    "target": "src/pages/Sport/SportCalendarPage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportCategoryPage.vue",
+    "target": "src/pages/Sport/SportCategoryPage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportDetailPage.vue",
+    "target": "src/pages/Sport/SportDetailPage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportFavoritesPage.vue",
+    "target": "src/pages/Sport/SportFavoritesPage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportLiveGamesPage.vue",
+    "target": "src/pages/Sport/SportLiveGamesPage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportLivePage.vue",
+    "target": "src/pages/Sport/SportLivePage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportPage.vue",
+    "target": "src/pages/Sport/SportPage.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Sport/SportSearchPage.vue",
+    "target": "src/pages/Sport/SportSearchPage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Sport/SportSinglePage.vue",
+    "target": "src/pages/Sport/SportSinglePage.jsx",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Pages/Terms/BonusTerms.vue",
+    "target": "src/pages/Terms/BonusTerms.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Terms/ConditionsReference.vue",
+    "target": "src/pages/Terms/ConditionsReference.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Terms/PrivacyPolicy.vue",
+    "target": "src/pages/Terms/PrivacyPolicy.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Terms/ServiceTerms.vue",
+    "target": "src/pages/Terms/ServiceTerms.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Pages/Terms/WelcomeBonus.vue",
+    "target": "src/pages/Terms/WelcomeBonus.jsx",
+    "status": "actual"
+  },
+  {
+    "source": "Plugins/interceptor.js",
+    "target": "src/legacy/Plugins/interceptor.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Router/index.js",
+    "target": "src/router/index.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Services/HttpApi.js",
+    "target": "src/services/HttpApi.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Stores/Auth.js",
+    "target": "src/contexts/Auth.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Stores/MissionStore.js",
+    "target": "src/contexts/MissionStore.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Stores/SearchGameStore.js",
+    "target": "src/contexts/SearchGameStore.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Stores/SettingStore.js",
+    "target": "src/contexts/SettingStore.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Stores/SideBarStore.js",
+    "target": "src/contexts/SideBarStore.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Stores/SpinStoreData.js",
+    "target": "src/contexts/SpinStoreData.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Stores/SportBet.js",
+    "target": "src/contexts/SportBet.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "Stores/Wallet.js",
+    "target": "src/contexts/Wallet.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "app.js",
+    "target": "src/legacy/app.js",
+    "status": "mapped_not_implemented"
+  },
+  {
+    "source": "bootstrap.js",
+    "target": "src/legacy/bootstrap.js",
+    "status": "mapped_not_implemented"
+  }
+]
