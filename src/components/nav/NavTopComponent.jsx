@@ -25,7 +25,7 @@ export default function NavTopComponent() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
         <Link to="/" className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500 text-sm font-black text-white">
-            VP
+            7XBET 
           </div>
 
           <div className="hidden sm:block">
