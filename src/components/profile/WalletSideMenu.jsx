@@ -5,7 +5,7 @@ const items = [
   { to: '/profile/deposit', label: 'Deposit' },
   { to: '/profile/withdraw', label: 'Withdraw' },
   { to: '/profile/transactions', label: 'Transactions' },
-  { to: '/records', label: 'Records' },
+  { to: '/profile/record', label: 'Records' },
   { to: '/profile/favorite', label: 'Favorites' },
   { to: '/profile/recents', label: 'Recents' },
   { to: '/profile/affiliate', label: 'Affiliate' },
