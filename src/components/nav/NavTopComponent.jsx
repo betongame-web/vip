@@ -29,7 +29,7 @@ export default function NavTopComponent() {
           </div>
 
           <div className="hidden sm:block">
-            <p className="text-base font-bold tracking-wide text-white">VIPERPRO React</p>
+            <p className="text-base font-bold tracking-wide text-white">7XBET</p>
             <p className="text-xs text-gray-400">Casino • Sports • Wallet</p>
           </div>
         </Link>
