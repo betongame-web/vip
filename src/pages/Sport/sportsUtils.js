@@ -1,30 +1,47 @@
 export function formatMatchDate(dateString) {
-  return new Intl.DateTimeFormat('en-GB', {
+  if (!dateString) return 'Date unavailable';
+
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return String(dateString);
+
+  return date.toLocaleString('en-GB', {
     day: '2-digit',
     month: 'short',
+    year: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-  }).format(new Date(dateString));
+  });
 }
 
 export function formatDayLabel(dateString) {
-  return new Intl.DateTimeFormat('en-GB', {
+  if (!dateString) return 'Upcoming';
+
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return String(dateString);
+
+  return date.toLocaleDateString('en-GB', {
     weekday: 'short',
     day: '2-digit',
     month: 'short',
-  }).format(new Date(dateString));
+  });
 }
 
-export function formatMoney(amount) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 2,
-  }).format(Number(amount) || 0);
+export function formatMoney(amount, currency = 'USD') {
+  const numeric = Number(amount || 0);
+
+  try {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency,
+      maximumFractionDigits: 2,
+    }).format(numeric);
+  } catch {
+    return `${numeric.toFixed(2)} ${currency}`;
+  }
 }
 
 export function initials(name = '') {
-  return name
+  return String(name)
     .split(' ')
     .filter(Boolean)
     .slice(0, 2)
@@ -34,8 +51,26 @@ export function initials(name = '') {
 }
 
 export function getStatusTone(status = '') {
-  const liveStates = ['First Half', 'Second Half', 'Halftime', 'In Progress', 'Kick Off'];
-  if (liveStates.includes(status)) return 'text-red-400';
-  if (status === 'Full Time') return 'text-emerald-400';
+  const value = String(status).toLowerCase();
+
+  if (
+    value.includes('first half') ||
+    value.includes('second half') ||
+    value.includes('halftime') ||
+    value.includes('in progress') ||
+    value.includes('kick off') ||
+    value.includes('live')
+  ) {
+    return 'text-red-400';
+  }
+
+  if (value.includes('full time') || value.includes('finished')) {
+    return 'text-emerald-400';
+  }
+
+  if (value.includes('not started') || value.includes('scheduled')) {
+    return 'text-amber-300';
+  }
+
   return 'text-slate-300';
 }
