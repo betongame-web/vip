@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import BaseLayout from '@/components/layouts/BaseLayout';
 import WalletSideMenu from '@/components/profile/WalletSideMenu';
+import LanguageSelector from '@/components/ui/LanguageSelector';
+import DropdownDarkLight from '@/components/ui/DropdownDarkLight';
 
 const profileStats = [
   { label: 'Account Status', value: 'Active' },
@@ -20,7 +22,7 @@ const accountNotes = [
   'This page should become the main user account center.',
   'Wallet, favorites, affiliate, and recent activity should stay easy to access.',
   'Later, real account information can come from backend profile APIs.',
-  'Security, verification, and reward widgets can be added step by step.',
+  'Language and theme widgets are now surfaced here for basic frontend preferences.',
 ];
 
 export default function Profile() {
@@ -44,6 +46,9 @@ export default function Profile() {
               ))}
             </div>
           </div>
+
+          <LanguageSelector />
+          <DropdownDarkLight />
         </div>
 
         <div className="space-y-6">
@@ -136,14 +141,6 @@ export default function Profile() {
                   <p className="pt-1 text-sm leading-7 text-gray-300">{item}</p>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4">
-              <h3 className="text-base font-semibold text-amber-200">Later integration</h3>
-              <p className="mt-2 text-sm leading-7 text-amber-100/90">
-                Later this page can display real user name, email, verification status, VIP level,
-                affiliate summary, and backend-driven profile information.
-              </p>
             </div>
           </section>
         </div>
