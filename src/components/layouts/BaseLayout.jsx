@@ -9,12 +9,14 @@ export default function BaseLayout({ children }) {
     <>
       <NavTopComponent />
       <SideBarComponent />
-      <div className="pt-[74px] md:ml-64">
-        <main className="mx-auto min-h-screen max-w-7xl px-4 py-6">
+
+      <div className="pt-[74px] md:ml-72">
+        <main className="mx-auto min-h-screen max-w-7xl px-4 pb-24 pt-6 md:pb-10">
           {children}
           <FooterComponent />
         </main>
       </div>
+
       <BottomNavComponent />
       <CookiesComponent />
     </>
