@@ -27,7 +27,9 @@ function clearToken() {
 
 function getStoredUser() {
   try {
-    const raw = localStorage.getItem('auth_user');
+    const raw =
+      localStorage.getItem('auth_user') ||
+      localStorage.getItem('user');
     return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
@@ -36,10 +38,12 @@ function getStoredUser() {
 
 function storeUser(user) {
   localStorage.setItem('auth_user', JSON.stringify(user || null));
+  localStorage.setItem('user', JSON.stringify(user || null));
 }
 
 function clearUser() {
   localStorage.removeItem('auth_user');
+  localStorage.removeItem('user');
 }
 
 export function AuthProvider({ children }) {
@@ -49,21 +53,29 @@ export function AuthProvider({ children }) {
 
   const isAuthenticated = Boolean(token);
 
+  const logout = useCallback(() => {
+    clearToken();
+    clearUser();
+    setToken('');
+    setUser(null);
+  }, []);
+
   const refreshMe = useCallback(async () => {
     const currentToken = getStoredToken();
 
     if (!currentToken) {
-      setUser(null);
       setToken('');
+      setUser(null);
       return null;
     }
 
-    const endpoints = ['/auth/me', '/profile/me', '/user'];
+    const endpoints = ['/auth/verify', '/auth/me', '/profile/me', '/user'];
 
     for (const endpoint of endpoints) {
       try {
         const { data } = await http.get(endpoint);
         const nextUser = data?.user || data?.data || data;
+        setToken(currentToken);
         setUser(nextUser || null);
         storeUser(nextUser || null);
         return nextUser || null;
@@ -72,8 +84,9 @@ export function AuthProvider({ children }) {
       }
     }
 
-    return getStoredUser();
-  }, []);
+    logout();
+    return null;
+  }, [logout]);
 
   useEffect(() => {
     let ignore = false;
@@ -84,18 +97,14 @@ export function AuthProvider({ children }) {
       if (!currentToken) {
         if (!ignore) {
           setBooting(false);
-          setUser(null);
           setToken('');
+          setUser(null);
         }
         return;
       }
 
       try {
-        const nextUser = await refreshMe();
-        if (!ignore) {
-          setUser(nextUser || getStoredUser());
-          setToken(currentToken);
-        }
+        await refreshMe();
       } finally {
         if (!ignore) {
           setBooting(false);
@@ -110,19 +119,19 @@ export function AuthProvider({ children }) {
     };
   }, [refreshMe]);
 
-  const login = useCallback((payload) => {
+  const login = useCallback(async (payload) => {
+    const { data } = await http.post('/auth/login', payload);
+
     const nextToken =
-      payload?.token ||
-      payload?.access_token ||
-      payload?.authToken ||
-      payload?.data?.token ||
-      payload?.data?.access_token ||
+      data?.access_token ||
+      data?.token ||
+      data?.authToken ||
       '';
 
     const nextUser =
-      payload?.user ||
-      payload?.data?.user ||
-      payload?.me ||
+      data?.user ||
+      data?.data?.user ||
+      data?.me ||
       null;
 
     if (nextToken) {
@@ -135,22 +144,39 @@ export function AuthProvider({ children }) {
       setUser(nextUser);
     }
 
-    return {
-      token: nextToken,
-      user: nextUser,
-    };
+    return data;
   }, []);
 
-  const logout = useCallback(() => {
-    clearToken();
-    clearUser();
-    setToken('');
-    setUser(null);
+  const register = useCallback(async (payload) => {
+    const { data } = await http.post('/auth/register', payload);
+
+    const nextToken =
+      data?.access_token ||
+      data?.token ||
+      data?.authToken ||
+      '';
+
+    const nextUser =
+      data?.user ||
+      data?.data?.user ||
+      null;
+
+    if (nextToken) {
+      storeToken(nextToken);
+      setToken(nextToken);
+    }
+
+    if (nextUser) {
+      storeUser(nextUser);
+      setUser(nextUser);
+    }
+
+    return data;
   }, []);
 
   const updateUser = useCallback((nextUser) => {
     storeUser(nextUser);
-    setUser(nextUser);
+    setUser(nextUser || null);
   }, []);
 
   const value = useMemo(
@@ -160,12 +186,13 @@ export function AuthProvider({ children }) {
       booting,
       isAuthenticated,
       login,
+      register,
       logout,
       refreshMe,
       updateUser,
       setUser: updateUser,
     }),
-    [token, user, booting, isAuthenticated, login, logout, refreshMe, updateUser],
+    [token, user, booting, isAuthenticated, login, register, logout, refreshMe, updateUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
