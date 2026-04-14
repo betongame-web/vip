@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LandingLayout from '@/components/layouts/LandingLayout';
+import Spinner from '@/components/landing-spin/Spinner';
+import LandingModal from '@/components/landing-spin/LandingModal';
+import Congrats from '@/components/landing-spin/Congrats';
+import LastWinners from '@/components/landing-spin/LastWinners';
 import http from '@/services/http';
 
 function getPrizeLabel(item) {
@@ -17,6 +21,9 @@ export default function LandingPage() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [spinning, setSpinning] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [wonPrize, setWonPrize] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     let ignore = false;
@@ -48,22 +55,36 @@ export default function LandingPage() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!spinning || prizes.length === 0) return undefined;
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % Math.min(prizes.length, 8));
+    }, 150);
+
+    return () => window.clearInterval(timer);
+  }, [spinning, prizes.length]);
+
   async function spin() {
     setSpinning(true);
     setMessage('');
+    setWonPrize('');
 
     try {
       const { data } = await http.post('/spin/result', {});
+      const resultPrize = data?.prize || data?.reward || data?.title || data?.name || data?.message || 'Reward';
+      setWonPrize(resultPrize);
       setMessage(data?.message || data?.msg || 'Spin completed.');
+      setModalOpen(true);
     } catch (error) {
       setMessage(error?.response?.data?.message || 'Spin failed.');
+      setModalOpen(true);
     } finally {
       setSpinning(false);
     }
   }
 
-  const topPrizes = useMemo(() => prizes.slice(0, 6), [prizes]);
-  const recentWinners = useMemo(() => winners.slice(0, 6), [winners]);
+  const topPrizes = useMemo(() => prizes.slice(0, 8), [prizes]);
 
   return (
     <LandingLayout>
@@ -116,7 +137,7 @@ export default function LandingPage() {
                   <li>• Reward-based landing experience</li>
                   <li>• Prize preview cards</li>
                   <li>• Recent winner showcase</li>
-                  <li>• Easy backend connection later</li>
+                  <li>• Integrated spinner and modal flow</li>
                 </ul>
               </div>
 
@@ -135,6 +156,8 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+
+        <Spinner prizes={topPrizes} spinning={spinning} activeIndex={activeIndex} />
 
         <section className="grid gap-4 md:grid-cols-3">
           {[
@@ -206,51 +229,7 @@ export default function LandingPage() {
             )}
           </div>
 
-          <div className="card-surface p-6">
-            <div className="flex items-center justify-between gap-3">
-              <h2 className="text-2xl font-bold text-white">Recent winners</h2>
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-300">
-                {winners.length} records
-              </span>
-            </div>
-
-            {loading ? (
-              <div className="mt-5 space-y-4">
-                {Array.from({ length: 4 }).map((_, index) => (
-                  <div key={index} className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                    <div className="h-4 animate-pulse rounded bg-white/10" />
-                    <div className="mt-3 h-3 w-1/2 animate-pulse rounded bg-white/10" />
-                  </div>
-                ))}
-              </div>
-            ) : recentWinners.length > 0 ? (
-              <div className="mt-5 space-y-4">
-                {recentWinners.map((item, index) => (
-                  <div
-                    key={item.id || `${getWinnerLabel(item)}-${index}`}
-                    className="rounded-2xl border border-white/10 bg-black/20 p-4"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="text-base font-semibold text-white">{getWinnerLabel(item)}</h3>
-                        <p className="mt-2 text-sm leading-7 text-gray-300">
-                          Won: {item?.prize || item?.award || item?.title || 'Reward item'}
-                        </p>
-                      </div>
-
-                      <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
-                        Winner
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-gray-300">
-                No recent winner data returned from the backend.
-              </div>
-            )}
-          </div>
+          <LastWinners winners={winners.map((item) => ({ ...item, name: getWinnerLabel(item) }))} />
         </section>
 
         <section className="card-surface p-6">
@@ -258,7 +237,7 @@ export default function LandingPage() {
 
           <div className="mt-5 space-y-4">
             {[
-              'This page should stay visually strong even when prize data is temporarily unavailable.',
+              'This page now includes spinner, modal, and winner-list integration.',
               'The spin button can later be connected to login checks, claim rules, and user eligibility.',
               'Prize cards and winner lists should come from backend-managed settings when ready.',
               'You can later add a proper wheel animation component without changing the whole layout.',
@@ -276,6 +255,18 @@ export default function LandingPage() {
           </div>
         </section>
       </div>
+
+      <LandingModal
+        open={modalOpen}
+        title={wonPrize ? 'Spin result' : 'Spin status'}
+        onClose={() => setModalOpen(false)}
+      >
+        {wonPrize ? <Congrats prize={wonPrize} onClose={() => setModalOpen(false)} /> : (
+          <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-gray-300">
+            {message || 'No spin result available.'}
+          </div>
+        )}
+      </LandingModal>
     </LandingLayout>
   );
 }
