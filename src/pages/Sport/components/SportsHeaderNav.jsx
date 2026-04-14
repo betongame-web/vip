@@ -1,26 +1,39 @@
-import { Link, NavLink } from 'react-router-dom';
-import { useSportsbook } from '@/contexts/SportsbookContext';
+import { NavLink } from 'react-router-dom';
 
-function tabClass({ isActive }) {
-  return `rounded-full px-3 py-2 text-sm font-medium transition ${isActive ? 'bg-emerald-500/20 text-emerald-300' : 'bg-white/5 text-slate-300 hover:bg-white/10'}`;
+const items = [
+  { to: '/sports', label: 'Overview' },
+  { to: '/sports/live', label: 'Live' },
+  { to: '/sports/calendar', label: 'Calendar' },
+  { to: '/sports/search', label: 'Search' },
+  { to: '/sports/favorites', label: 'Favorites' },
+  { to: '/sports/bets', label: 'My Bets' },
+  { to: '/sports/feed', label: 'Feed' },
+];
+
+function itemClass(isActive) {
+  return [
+    'whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition',
+    isActive
+      ? 'bg-emerald-500 text-slate-950'
+      : 'border border-white/10 bg-white/[0.03] text-gray-200 hover:bg-white/10',
+  ].join(' ');
 }
 
 export default function SportsHeaderNav() {
-  const { bets } = useSportsbook();
-
   return (
-    <div className="card-surface mb-4 flex flex-wrap items-center justify-between gap-3 p-3">
-      <div className="flex flex-wrap gap-2">
-        <NavLink to="/sports" end className={tabClass}>Overview</NavLink>
-        <NavLink to="/sports/live" className={tabClass}>Live</NavLink>
-        <NavLink to="/sports/favorites" className={tabClass}>Favorites</NavLink>
-        <NavLink to="/sports/search" className={tabClass}>Search</NavLink>
-        <NavLink to="/sports/bets" className={tabClass}>My Bets</NavLink>
+    <div className="mb-4 overflow-x-auto">
+      <div className="flex min-w-max items-center gap-2 rounded-2xl border border-white/10 bg-brandgray-800/70 p-2">
+        {items.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.to === '/sports'}
+            className={({ isActive }) => itemClass(isActive)}
+          >
+            {item.label}
+          </NavLink>
+        ))}
       </div>
-
-      <Link to="/sports/bets" className="rounded-full border border-emerald-400/25 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-300">
-        Betslip {bets.length ? `(${bets.length})` : ''}
-      </Link>
     </div>
   );
 }
