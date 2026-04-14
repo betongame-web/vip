@@ -8,7 +8,11 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
-  const [form, setForm] = useState({ email: '', password: '' });
+
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,9 +21,10 @@ export default function LoginPage() {
     event.preventDefault();
     setLoading(true);
     setMessages([]);
+
     try {
       await login(form);
-      const target = location.state?.from?.pathname || '/';
+      const target = location.state?.from?.pathname || '/profile';
       navigate(target, { replace: true });
     } catch (error) {
       setMessages(extractErrorMessages(error));
@@ -31,10 +36,10 @@ export default function LoginPage() {
   return (
     <AuthLayout>
       <div className="card-surface p-8">
-        <h1 className="mb-8 text-center text-3xl font-bold">Login</h1>
+        <h2 className="mb-6 text-center text-3xl font-bold text-white">Login</h2>
 
         {messages.length > 0 ? (
-          <div className="mb-5 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-200">
+          <div className="mb-5 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-200">
             {messages.map((message) => (
               <p key={message}>{message}</p>
             ))}
@@ -42,50 +47,62 @@ export default function LoginPage() {
         ) : null}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            required
-            type="text"
-            value={form.email}
-            onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
-            className="input"
-            placeholder="Enter email or phone"
-          />
-
-          <div className="space-y-2">
+          <div>
+            <label className="mb-2 block text-sm text-gray-400">Email</label>
             <input
-              required
-              type={showPassword ? 'text' : 'password'}
-              value={form.password}
-              onChange={(event) => setForm((prev) => ({ ...prev, password: event.target.value }))}
+              type="email"
+              value={form.email}
+              onChange={(event) =>
+                setForm((prev) => ({ ...prev, email: event.target.value }))
+              }
+              placeholder="Enter your email"
               className="input"
-              placeholder="Type the password"
+              autoComplete="email"
             />
-            <button type="button" onClick={() => setShowPassword((prev) => !prev)} className="text-sm text-gray-400">
-              {showPassword ? 'Hide password' : 'Show password'}
-            </button>
           </div>
 
-          <Link to="/forgot-password" className="block text-sm text-gray-300">
-            Forgot password
-          </Link>
+          <div>
+            <label className="mb-2 block text-sm text-gray-400">Password</label>
+            <div className="grid grid-cols-[1fr_auto] gap-3">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={form.password}
+                onChange={(event) =>
+                  setForm((prev) => ({ ...prev, password: event.target.value }))
+                }
+                placeholder="Enter your password"
+                className="input"
+                autoComplete="current-password"
+              />
 
-          <button type="submit" disabled={loading} className="ui-button-blue w-full disabled:opacity-60">
-            {loading ? 'Logging in...' : 'Log in'}
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-200 transition hover:bg-white/10"
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-3 text-sm">
+            <Link to="/forgot-password" className="text-emerald-300 hover:text-emerald-200">
+              Forgot password?
+            </Link>
+
+            <Link to="/register" className="text-gray-300 hover:text-white">
+              Create account
+            </Link>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-
-        <p className="mt-6 text-sm text-gray-300">
-          Not have an account yet?{' '}
-          <Link to="/register" className="font-semibold text-white">
-            Create an account
-          </Link>
-        </p>
-
-        <div className="mt-8 border-t border-white/10 pt-6 text-center text-sm text-gray-400">
-          <a href="/auth/redirect/google" className="inline-flex rounded-full border border-white/10 px-5 py-3">
-            Continue with Google
-          </a>
-        </div>
       </div>
     </AuthLayout>
   );
