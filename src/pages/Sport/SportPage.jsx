@@ -6,6 +6,11 @@ import SportsHeaderOptions from '@/pages/Sport/components/SportsHeaderOptions';
 import SportEventCard from '@/pages/Sport/components/SportEventCard';
 import SportLiveHeroCard from '@/pages/Sport/components/SportLiveHeroCard';
 import BettingBulletin from '@/pages/Sport/components/BettingBulletin';
+import FootballGameWidget from '@/components/widgets/FootballGameWidget';
+
+function slugify(value = '') {
+  return String(value).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
 
 export default function SportPage() {
   const { featuredEvents, liveEvents, upcomingEvents, favoriteEvents, bets } = useSportsbook();
@@ -54,10 +59,10 @@ export default function SportPage() {
                   </Link>
 
                   <Link
-                    to="/sports/bets"
+                    to="/sports/live-games"
                     className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-gray-200 transition hover:bg-white/10"
                   >
-                    My Bets
+                    Live Games Page
                   </Link>
                 </div>
               </div>
@@ -105,29 +110,36 @@ export default function SportPage() {
             </div>
           </section>
 
-          <section className="grid gap-4 md:grid-cols-3">
-            {[
-              {
-                title: 'Live Match Access',
-                description:
-                  'Users can jump into live events quickly and select odds directly from active markets.',
-              },
-              {
-                title: 'Favorites & Search',
-                description:
-                  'Saved events and searchable match lists make the sportsbook easier to use.',
-              },
-              {
-                title: 'Local Betslip',
-                description:
-                  'Selections are stored locally so the interface behaves like a working sportsbook frontend.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="card-surface p-5">
-                <h2 className="text-lg font-semibold text-white">{item.title}</h2>
-                <p className="mt-3 text-sm leading-7 text-gray-300">{item.description}</p>
+          <FootballGameWidget />
+
+          <section className="card-surface p-6">
+            <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-white">Main leagues</h2>
+                <p className="mt-2 text-sm leading-7 text-gray-300">
+                  Top league categories currently available in the local sports feed.
+                </p>
               </div>
-            ))}
+
+              <Link
+                to="/sports/search"
+                className="w-fit rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-gray-200 transition hover:bg-white/10"
+              >
+                Search events
+              </Link>
+            </div>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+              {leagues.map((league) => (
+                <Link
+                  key={league}
+                  to={`/sports/category/${slugify(league)}`}
+                  className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm text-gray-200 transition hover:bg-white/10"
+                >
+                  {league}
+                </Link>
+              ))}
+            </div>
           </section>
 
           {liveEvents.length > 0 ? (
@@ -155,35 +167,6 @@ export default function SportPage() {
               </div>
             </section>
           ) : null}
-
-          <section className="card-surface p-6">
-            <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-              <div>
-                <h2 className="text-2xl font-bold text-white">Main leagues</h2>
-                <p className="mt-2 text-sm leading-7 text-gray-300">
-                  Top league categories currently available in the local sports feed.
-                </p>
-              </div>
-
-              <Link
-                to="/sports/search"
-                className="w-fit rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-gray-200 transition hover:bg-white/10"
-              >
-                Search events
-              </Link>
-            </div>
-
-            <div className="mt-5 flex flex-wrap gap-3">
-              {leagues.map((league) => (
-                <div
-                  key={league}
-                  className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm text-gray-200"
-                >
-                  {league}
-                </div>
-              ))}
-            </div>
-          </section>
 
           <section>
             <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
