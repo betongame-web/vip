@@ -28,6 +28,9 @@ import SportFavoritesPage from '@/pages/Sport/SportFavoritesPage';
 import SportSinglePage from '@/pages/Sport/SportSinglePage';
 import SportBetsPage from '@/pages/Sport/SportBetsPage';
 import SportBettingFeedPage from '@/pages/Sport/SportBettingFeedPage';
+import SportCategoryPage from '@/pages/Sport/SportCategoryPage';
+import SportDetailPage from '@/pages/Sport/SportDetailPage';
+import SportLiveGamesPage from '@/pages/Sport/SportLiveGamesPage';
 
 import ProfilePage from '@/pages/Profile/ProfilePage';
 import WalletPage from '@/pages/Profile/WalletPage';
@@ -79,10 +82,13 @@ export default function App() {
 
           <Route path="/sports" element={<SportPage />} />
           <Route path="/sports/live" element={<SportLivePage />} />
+          <Route path="/sports/live-games" element={<SportLiveGamesPage />} />
           <Route path="/sports/calendar" element={<SportCalendarPage />} />
           <Route path="/sports/search" element={<SportSearchPage />} />
           <Route path="/sports/favorites" element={<SportFavoritesPage />} />
           <Route path="/sports/event/:id" element={<SportSinglePage />} />
+          <Route path="/sports/detail/:id" element={<SportDetailPage />} />
+          <Route path="/sports/category/:category" element={<SportCategoryPage />} />
           <Route path="/sports/bets" element={<SportBetsPage />} />
           <Route path="/sports/feed" element={<SportBettingFeedPage />} />
 
@@ -91,86 +97,16 @@ export default function App() {
           <Route path="/casino/provider/:provider/category/:category" element={<CassinoListPage />} />
           <Route path="/casino/search" element={<CassinoSearch />} />
 
-          <Route
-            path="/profile"
-            element={
-              <RequireAuth>
-                <ProfilePage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profile/wallet"
-            element={
-              <RequireAuth>
-                <WalletPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profile/deposit"
-            element={
-              <RequireAuth>
-                <DepositPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profile/withdraw"
-            element={
-              <RequireAuth>
-                <WithdrawPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profile/transactions"
-            element={
-              <RequireAuth>
-                <TransactionPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profile/record"
-            element={
-              <RequireAuth>
-                <RecordPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/records"
-            element={
-              <RequireAuth>
-                <RecordPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profile/favorite"
-            element={
-              <RequireAuth>
-                <FavoritePage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profile/recents"
-            element={
-              <RequireAuth>
-                <RecentsPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/profile/affiliate"
-            element={
-              <RequireAuth>
-                <AffiliatePage />
-              </RequireAuth>
-            }
-          />
+          <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
+          <Route path="/profile/wallet" element={<RequireAuth><WalletPage /></RequireAuth>} />
+          <Route path="/profile/deposit" element={<RequireAuth><DepositPage /></RequireAuth>} />
+          <Route path="/profile/withdraw" element={<RequireAuth><WithdrawPage /></RequireAuth>} />
+          <Route path="/profile/transactions" element={<RequireAuth><TransactionPage /></RequireAuth>} />
+          <Route path="/profile/record" element={<RequireAuth><RecordPage /></RequireAuth>} />
+          <Route path="/records" element={<RequireAuth><RecordPage /></RequireAuth>} />
+          <Route path="/profile/favorite" element={<RequireAuth><FavoritePage /></RequireAuth>} />
+          <Route path="/profile/recents" element={<RequireAuth><RecentsPage /></RequireAuth>} />
+          <Route path="/profile/affiliate" element={<RequireAuth><AffiliatePage /></RequireAuth>} />
 
           <Route path="/terms/conditions-reference" element={<ConditionsReference />} />
           <Route path="/terms/service" element={<ServiceTerms />} />
