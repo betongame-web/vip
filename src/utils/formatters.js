@@ -1,65 +1,64 @@
-export function platformName() {
-  return 'VIPERPRO';
-}
+export function currencyFormat(amount, currency = 'USD') {
+  const numeric = Number(amount || 0);
 
-export function dateFormatServer(date) {
-  const currentDate = new Date(date);
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-  const day = String(currentDate.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-export function formatDate(dateTimeString, locale = 'en-US') {
-  const date = new Date(dateTimeString);
-  if (Number.isNaN(date.getTime())) return '';
-  return date.toLocaleString(locale, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-}
-
-export function generateSlug(text = '') {
-  return String(text)
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
-}
-
-export function currencyFormat(value, currency = 'USD', locale = 'en-US') {
-  const numeric = typeof value === 'number' ? value : parseFloat(value || 0);
   try {
-    return new Intl.NumberFormat(locale, {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency,
+      maximumFractionDigits: 2,
     }).format(numeric);
   } catch {
     return `${numeric.toFixed(2)} ${currency}`;
   }
 }
 
-export function currencyUSD(value) {
-  const numeric = typeof value === 'number' ? value : parseFloat(value || 0);
-  return new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(numeric);
-}
-
-export function limitCharacters(value = '', limit = 80) {
-  if (value.length <= limit) return value;
-  return `${value.slice(0, limit)}...`;
-}
-
 export function statusLabel(status) {
-  if (status === 1) return 'Concluded';
-  if (status === 0) return 'Pending';
+  const value = Number(status);
+
+  if (value === 1) return 'Completed';
+  if (value === 0) return 'Pending';
+  if (value === 2) return 'Cancelled';
+  if (value === 3) return 'Rejected';
+
   return 'Unknown';
+}
+
+export function numberFormat(value) {
+  const numeric = Number(value || 0);
+
+  try {
+    return new Intl.NumberFormat('en-US', {
+      maximumFractionDigits: 2,
+    }).format(numeric);
+  } catch {
+    return String(numeric);
+  }
+}
+
+export function shortDate(value) {
+  if (!value) return '—';
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+
+  return date.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
+export function fullDateTime(value) {
+  if (!value) return '—';
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+
+  return date.toLocaleString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 }
