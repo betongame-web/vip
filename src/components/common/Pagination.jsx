@@ -1,31 +1,59 @@
+function buildPages(current, last) {
+  const pages = [];
+
+  for (let i = 1; i <= last; i += 1) {
+    pages.push(i);
+  }
+
+  return pages;
+}
+
 export default function Pagination({ pagination, onPageChange }) {
-  if (!pagination) return null;
-  const currentPage = pagination.current_page || 1;
-  const lastPage = pagination.last_page || 1;
+  const currentPage = Number(
+    pagination?.current_page || pagination?.currentPage || 1,
+  );
+  const lastPage = Number(
+    pagination?.last_page || pagination?.lastPage || 1,
+  );
+
+  if (!pagination || lastPage <= 1) return null;
+
+  const pages = buildPages(currentPage, lastPage);
 
   return (
-    <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-      <p className="text-sm text-gray-400">
-        Page {currentPage} of {lastPage}
-      </p>
-      <div className="flex gap-2">
+    <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+      <button
+        type="button"
+        disabled={currentPage <= 1}
+        onClick={() => onPageChange?.(currentPage - 1)}
+        className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-gray-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        Prev
+      </button>
+
+      {pages.map((page) => (
         <button
+          key={page}
           type="button"
-          onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-          disabled={currentPage <= 1}
-          className="rounded-lg border border-white/10 px-4 py-2 text-sm disabled:opacity-40"
+          onClick={() => onPageChange?.(page)}
+          className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
+            page === currentPage
+              ? 'bg-emerald-500 text-white'
+              : 'border border-white/10 bg-white/5 text-gray-200 hover:bg-white/10'
+          }`}
         >
-          Previous
+          {page}
         </button>
-        <button
-          type="button"
-          onClick={() => onPageChange(Math.min(lastPage, currentPage + 1))}
-          disabled={currentPage >= lastPage}
-          className="rounded-lg border border-white/10 px-4 py-2 text-sm disabled:opacity-40"
-        >
-          Next
-        </button>
-      </div>
+      ))}
+
+      <button
+        type="button"
+        disabled={currentPage >= lastPage}
+        onClick={() => onPageChange?.(currentPage + 1)}
+        className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-gray-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        Next
+      </button>
     </div>
   );
 }
