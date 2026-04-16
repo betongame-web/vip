@@ -4,16 +4,28 @@ import http from '@/services/http';
 const SettingsContext = createContext(null);
 
 const DEFAULT_SETTINGS = {
+  site_name: 'ViperPro',
+  currency_code: 'USD',
+  currency_symbol: '$',
   min_deposit: 10,
   max_deposit: 10000,
   min_withdrawal: 20,
   suitpay_is_enable: true,
   stripe_is_enable: true,
+  rollover: 1,
+  disable_spin: false,
 };
 
 function normalizeSettings(data) {
   if (!data) return DEFAULT_SETTINGS;
 
+  // backend response shape:
+  // { setting: { ... } }
+  if (data.setting && typeof data.setting === 'object') {
+    return { ...DEFAULT_SETTINGS, ...data.setting };
+  }
+
+  // fallback compatibility
   if (data.settings && typeof data.settings === 'object') {
     return { ...DEFAULT_SETTINGS, ...data.settings };
   }
@@ -39,25 +51,20 @@ export function SettingsProvider({ children }) {
     async function loadSettings() {
       setLoadingSettings(true);
 
-      const endpoints = ['/settings', '/settings/all', '/settings/general'];
+      try {
+        const { data } = await http.get('/settings/data');
 
-      for (const endpoint of endpoints) {
-        try {
-          const { data } = await http.get(endpoint);
-
-          if (!ignore) {
-            setSettings(normalizeSettings(data));
-            setLoadingSettings(false);
-          }
-          return;
-        } catch {
-          // try next endpoint
+        if (!ignore) {
+          setSettings(normalizeSettings(data));
         }
-      }
-
-      if (!ignore) {
-        setSettings(DEFAULT_SETTINGS);
-        setLoadingSettings(false);
+      } catch (error) {
+        if (!ignore) {
+          setSettings(DEFAULT_SETTINGS);
+        }
+      } finally {
+        if (!ignore) {
+          setLoadingSettings(false);
+        }
       }
     }
 
