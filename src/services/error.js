@@ -20,6 +20,14 @@ export function extractErrorMessages(error) {
     return [data.message];
   }
 
+  if (typeof data?.error === 'string' && data.error.trim()) {
+    return [data.error];
+  }
+
+  if (typeof data?.debug_message === 'string' && data.debug_message.trim()) {
+    return [data.debug_message];
+  }
+
   if (typeof error?.message === 'string' && error.message.trim()) {
     return [error.message];
   }
