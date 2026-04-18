@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import http from '@/services/http';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function CasinoPlayPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isAuthenticated, booting } = useAuth();
 
   const [loading, setLoading] = useState(true);
   const [game, setGame] = useState(null);
@@ -15,6 +17,13 @@ export default function CasinoPlayPage() {
     let ignore = false;
 
     async function loadGame() {
+      if (booting) return;
+
+      if (!isAuthenticated) {
+        navigate('/login', { replace: true });
+        return;
+      }
+
       setLoading(true);
       setError('');
 
@@ -22,6 +31,11 @@ export default function CasinoPlayPage() {
         const { data } = await http.get(`/games/single/${id}`);
 
         if (ignore) return;
+
+        if (data?.action === 'deposit') {
+          navigate('/profile/deposit', { replace: true });
+          return;
+        }
 
         setGame(data?.game || null);
         setGameUrl(data?.gameUrl || '');
@@ -47,13 +61,13 @@ export default function CasinoPlayPage() {
     return () => {
       ignore = true;
     };
-  }, [id]);
+  }, [id, booting, isAuthenticated, navigate]);
 
   const title = useMemo(() => {
     return game?.game_name || 'Game';
   }, [game]);
 
-  if (loading) {
+  if (booting || loading) {
     return (
       <div className="min-h-screen bg-[#0b0f1a] text-white p-4">
         <div className="mx-auto max-w-6xl rounded-2xl border border-white/10 bg-white/5 p-6">
