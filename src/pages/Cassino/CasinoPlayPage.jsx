@@ -27,7 +27,11 @@ export default function CasinoPlayPage() {
         setGameUrl(data?.gameUrl || '');
       } catch (err) {
         if (!ignore) {
-          setError('Unable to load game.');
+          const message =
+            err?.response?.data?.error ||
+            err?.response?.data?.message ||
+            'Unable to load game.';
+          setError(message);
         }
       } finally {
         if (!ignore) {
