@@ -1,14 +1,11 @@
 import axios from 'axios';
-
-const BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  import.meta.env.VITE_API_BASE_URL ||
-  'http://localhost:8000/api';
+import { getApiBaseUrl } from '@/utils/url';
 
 const http = axios.create({
-  baseURL: BASE_URL,
+  baseURL: getApiBaseUrl(),
   headers: {
     Accept: 'application/json',
+    'Content-Type': 'application/json',
   },
 });
 
@@ -27,7 +24,7 @@ http.interceptors.request.use((config) => {
 
 http.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error),
+  (error) => Promise.reject(error)
 );
 
 export default http;
