@@ -6,12 +6,13 @@ import { useAuth } from '@/contexts/AuthContext';
 export default function CasinoPlayPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isAuthenticated, booting } = useAuth();
+  const { isAuthenticated, booting, token } = useAuth();
 
   const [loading, setLoading] = useState(true);
   const [game, setGame] = useState(null);
   const [gameUrl, setGameUrl] = useState('');
   const [error, setError] = useState('');
+  const [debug, setDebug] = useState(null);
 
   useEffect(() => {
     let ignore = false;
@@ -26,27 +27,50 @@ export default function CasinoPlayPage() {
 
       setLoading(true);
       setError('');
+      setDebug(null);
 
       try {
-        const { data } = await http.get(`/games/single/${id}`);
+        const response = await http.get(`/games/single/${id}`);
+        const data = response?.data || {};
 
         if (ignore) return;
 
+        setDebug({
+          ok: true,
+          status: response?.status,
+          tokenExists: Boolean(token),
+          response: data,
+        });
+
         if (data?.action === 'deposit') {
-          navigate('/profile/deposit', { replace: true });
+          setError('Insufficient balance');
+          setLoading(false);
           return;
         }
 
         setGame(data?.game || null);
         setGameUrl(data?.gameUrl || '');
-      } catch (err) {
-        if (!ignore) {
-          const message =
-            err?.response?.data?.error ||
-            err?.response?.data?.message ||
-            'Unable to load game.';
-          setError(message);
+
+        if (!data?.gameUrl) {
+          setError('Game URL not found.');
         }
+      } catch (err) {
+        if (ignore) return;
+
+        const payload = err?.response?.data || null;
+        const message =
+          payload?.error ||
+          payload?.message ||
+          'Unable to load game.';
+
+        setDebug({
+          ok: false,
+          status: err?.response?.status || null,
+          tokenExists: Boolean(token),
+          response: payload,
+        });
+
+        setError(message);
       } finally {
         if (!ignore) {
           setLoading(false);
@@ -61,7 +85,7 @@ export default function CasinoPlayPage() {
     return () => {
       ignore = true;
     };
-  }, [id, booting, isAuthenticated, navigate]);
+  }, [id, booting, isAuthenticated, navigate, token]);
 
   if (booting || loading) {
     return (
@@ -75,18 +99,26 @@ export default function CasinoPlayPage() {
 
   if (error || !gameUrl) {
     return (
-      <div className="fixed inset-0 bg-[#0b0f1a] text-white p-4">
-        <div className="mx-auto max-w-3xl rounded-2xl border border-red-500/20 bg-red-500/10 p-6 mt-6">
-          <div className="text-lg font-semibold mb-2">Game unavailable</div>
-          <div className="text-sm text-white/80 mb-4">
-            {error || 'Game URL not found.'}
+      <div className="min-h-screen bg-[#050b18] p-4 text-white">
+        <div className="mx-auto max-w-4xl space-y-4">
+          <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-5">
+            <div className="mb-2 text-xl font-semibold">Game unavailable</div>
+            <div className="text-sm text-white/80">{error || 'Game URL not found.'}</div>
+
+            <button
+              onClick={() => navigate('/casinos')}
+              className="mt-4 rounded-xl bg-emerald-500 px-4 py-2 text-sm font-medium text-white"
+            >
+              Back to Casino
+            </button>
           </div>
-          <button
-            onClick={() => navigate('/casinos')}
-            className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-medium text-white"
-          >
-            Back to Casino
-          </button>
+
+          <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
+            <div className="mb-3 text-sm font-semibold text-white">Debug info</div>
+            <pre className="overflow-auto whitespace-pre-wrap break-words text-xs text-green-300">
+              {JSON.stringify(debug, null, 2)}
+            </pre>
+          </div>
         </div>
       </div>
     );
