@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import http from '@/services/http';
 import { useAuth } from '@/contexts/AuthContext';
@@ -63,14 +63,10 @@ export default function CasinoPlayPage() {
     };
   }, [id, booting, isAuthenticated, navigate]);
 
-  const title = useMemo(() => {
-    return game?.game_name || 'Game';
-  }, [game]);
-
   if (booting || loading) {
     return (
-      <div className="min-h-screen bg-[#0b0f1a] text-white p-4">
-        <div className="mx-auto max-w-6xl rounded-2xl border border-white/10 bg-white/5 p-6">
+      <div className="fixed inset-0 bg-black text-white flex items-center justify-center">
+        <div className="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm">
           Loading game...
         </div>
       </div>
@@ -79,8 +75,8 @@ export default function CasinoPlayPage() {
 
   if (error || !gameUrl) {
     return (
-      <div className="min-h-screen bg-[#0b0f1a] text-white p-4">
-        <div className="mx-auto max-w-6xl rounded-2xl border border-red-500/20 bg-red-500/10 p-6">
+      <div className="fixed inset-0 bg-[#0b0f1a] text-white p-4">
+        <div className="mx-auto max-w-3xl rounded-2xl border border-red-500/20 bg-red-500/10 p-6 mt-6">
           <div className="text-lg font-semibold mb-2">Game unavailable</div>
           <div className="text-sm text-white/80 mb-4">
             {error || 'Game URL not found.'}
@@ -97,31 +93,31 @@ export default function CasinoPlayPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0f1a] text-white p-3 md:p-4">
-      <div className="mx-auto max-w-7xl space-y-3">
-        <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-          <div>
-            <div className="text-lg font-semibold">{title}</div>
-            <div className="text-xs text-white/60">
+    <div className="fixed inset-0 bg-black">
+      <iframe
+        src={gameUrl}
+        title={game?.game_name || 'Game'}
+        className="absolute inset-0 h-full w-full border-0"
+        allowFullScreen
+      />
+
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-black/70 to-transparent p-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="pointer-events-auto rounded-2xl border border-white/10 bg-black/45 px-3 py-2 text-white backdrop-blur">
+            <div className="text-sm font-semibold leading-tight">
+              {game?.game_name || 'Game'}
+            </div>
+            <div className="text-[11px] text-white/65 leading-tight">
               {game?.provider?.name || 'Original Game'}
             </div>
           </div>
 
           <button
             onClick={() => navigate('/casinos')}
-            className="rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15"
+            className="pointer-events-auto rounded-xl bg-white/12 px-4 py-2 text-sm font-medium text-white backdrop-blur hover:bg-white/20"
           >
             Back
           </button>
-        </div>
-
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-black">
-          <iframe
-            src={gameUrl}
-            title={title}
-            className="h-[80vh] w-full"
-            allowFullScreen
-          />
         </div>
       </div>
     </div>
