@@ -1,15 +1,30 @@
-const trimSlash = (value = '') => value.replace(/\/+$/, '');
+const trimSlash = (value = '') => String(value).replace(/\/+$/, '');
+
+function getCurrentOrigin() {
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return trimSlash(window.location.origin);
+  }
+  return '';
+}
 
 export function getApiBaseUrl() {
-  return trimSlash(
-    import.meta.env.VITE_API_BASE_URL || 'https://vip-back.onrender.com/api'
-  );
+  const envBase = trimSlash(import.meta.env.VITE_API_BASE_URL || '');
+  if (envBase) return envBase;
+
+  const origin = getCurrentOrigin();
+  if (origin) return `${origin}/api`;
+
+  return 'https://vip-back.onrender.com/api';
 }
 
 export function getAppBaseUrl() {
-  return trimSlash(
-    import.meta.env.VITE_APP_BASE_URL || 'https://vip-back.onrender.com'
-  );
+  const envBase = trimSlash(import.meta.env.VITE_APP_BASE_URL || '');
+  if (envBase) return envBase;
+
+  const origin = getCurrentOrigin();
+  if (origin) return origin;
+
+  return 'https://vip-back.onrender.com';
 }
 
 export function getStorageUrl(path = '') {
